@@ -1,11 +1,16 @@
-// import 
+// packages imports  
 import colors from "colors";
 import express from "express";
 import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
-import testRoutes from './routes/testRoutes.js'
 import morgan from "morgan";
 import cors from "cors";
+
+// routes import 
+import testRoutes from './routes/testRoutes.js'
+import authRoutes from './routes/authRoutes.js'
+
+
 // Dot env config 
 dotenv.config()
 
@@ -26,6 +31,7 @@ app.use(morgan("dev"));
 
 // route 
 app.use('/api/v1/test', testRoutes)
+app.use("/api/v1/auth", authRoutes);
 
 
 
