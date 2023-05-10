@@ -3,7 +3,9 @@ import colors from "colors";
 import express from "express";
 import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
-
+import testRoutes from './routes/testRoutes.js'
+import morgan from "morgan";
+import cors from "cors";
 // Dot env config 
 dotenv.config()
 
@@ -14,11 +16,16 @@ connectDB();
 // rest object 
 const app = express();
 
+// middelwares
+app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
+
+
+
 
 // route 
-app.get('/', (req, res) => {
-    res.send("welcome to intern_bangla website")
-})
+app.use('/api/v1/test', testRoutes)
 
 
 
