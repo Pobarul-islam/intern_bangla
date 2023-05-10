@@ -31,6 +31,7 @@ app.use(morgan("dev"));
 
 
 // route 
+
 app.use('/api/v1/test', testRoutes)
 app.use("/api/v1/auth", authRoutes);
 
