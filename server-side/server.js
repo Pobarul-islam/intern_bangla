@@ -5,10 +5,11 @@ import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
 import morgan from "morgan";
 import cors from "cors";
-
+import "express-async-errors";
 // routes import 
 import testRoutes from './routes/testRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import errorMiddelware from "./middelwares/errorMiddelware.js";
 
 
 // Dot env config 
@@ -33,6 +34,8 @@ app.use(morgan("dev"));
 app.use('/api/v1/test', testRoutes)
 app.use("/api/v1/auth", authRoutes);
 
+// validation middelware 
+app.use(errorMiddelware);
 
 
 // port 
