@@ -10,6 +10,7 @@ import "express-async-errors";
 import testRoutes from './routes/testRoutes.js'
 import authRoutes from './routes/authRoutes.js'
 import errorMiddelware from "./middelwares/errorMiddelware.js";
+import userRoutes from './routes/userRoutes.js';
 
 
 // Dot env config 
@@ -34,6 +35,7 @@ app.use(morgan("dev"));
 
 app.use('/api/v1/test', testRoutes)
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 
 // validation middelware 
 app.use(errorMiddelware);
