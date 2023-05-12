@@ -1,6 +1,6 @@
 import express from 'express';
 import userAuth from '../middelwares/authMiddleware.js';
-import { createJobController, deleteJobController, getAllJobsController, updateJobController } from '../controllers/jobController.js';
+import { createJobController, deleteJobController, getAllJobsController, jobStatsController, updateJobController } from '../controllers/jobController.js';
 
 const router = express.Router();
 
@@ -19,6 +19,10 @@ router.patch('/update-job/:id', userAuth, updateJobController)
 
 // Delete jobs
 router.delete('/delete-job/:id', userAuth, deleteJobController)
+
+
+// Jobs status filter
+router.get('/job-stats', userAuth, jobStatsController)
 
 
 export default router;
