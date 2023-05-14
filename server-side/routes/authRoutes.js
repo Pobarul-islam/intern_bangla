@@ -1,9 +1,11 @@
 import express from "express";
-import { loginController, registerController } from "../controllers/authController.js";
+import {
+  loginController,
+  registerController,
+} from "../controllers/authController.js";
 import rateLimit from "express-rate-limit";
 
-
-// ip limiter 
+// ip limiter
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -11,15 +13,14 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-
-// routes object
+// request routes object
 const router = express.Router();
 
 // REGISTER ROUTE
 router.post("/register", limiter, registerController);
 
-// LOGIN ROUTE 
-router.post("/login", loginController)
+// LOGIN ROUTE
+router.post("/login", loginController);
 
 // export
 export default router;
