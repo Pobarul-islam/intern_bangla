@@ -1,14 +1,11 @@
-import express from "express"
+import express from "express";
 import testPostController from "../controllers/testController.js";
 import userAuth from "../middelwares/authMiddleware.js";
 
-
-
-
-// router object 
+// router object
 const router = express.Router();
 
-// routes 
+// routes
 router.post("/test-post", userAuth, testPostController);
 
 export default router;

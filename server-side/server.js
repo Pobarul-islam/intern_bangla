@@ -6,14 +6,10 @@ import morgan from "morgan";
 import cors from "cors";
 import "express-async-errors";
 
-// API Documention
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-
 // security imports
 import helmet from "helmet";
-import xss from 'xss-clean';
-import mongoSanitize from 'express-mongo-sanitize';
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
 // files import
 import connectDB from "./config/db.js";
 
@@ -29,26 +25,6 @@ dotenv.config();
 
 // mongodb connection
 connectDB();
-
-// swagger api config 
-// swagger api options 
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Job Portal Application",
-      description: "Node Expressjs job portal application",
-    },
-    servers: [
-      {
-        url: "http://localhost:5000",
-      },
-    ],
-  },
-  apis:['./routes/*.js'],
-};
-
-const spec = swaggerJSDoc(options)
 
 // rest object
 const app = express();
@@ -68,9 +44,6 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/job", jobsRoutes);
 
-
-// homeroute root 
-app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(spec));
 // validation middelware
 app.use(errorMiddelware);
 

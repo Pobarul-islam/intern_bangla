@@ -16,62 +16,60 @@ export const createJobController = async (req, res, next) => {
 // Get jobs
 
 export const getAllJobsController = async (req, res, next) => {
-
-  const { status, workType, search, sort} = req.query
-  // conditions for searching filters 
+  const { status, workType, search, sort } = req.query;
+  // conditions for searching filters
   const queryObject = {
-    createdBy: req.user.userId
-  }
+    createdBy: req.user.userId,
+  };
 
   // logic filters
 
-  if (status && status !== 'all') {
-      queryObject.status = status
+  if (status && status !== "all") {
+    queryObject.status = status;
   }
 
-  if (workType && workType !== 'all') {
+  if (workType && workType !== "all") {
     queryObject.workType = workType;
   }
 
   if (search) {
-    queryObject.position = { $regex: search, $options: 'i' };
+    queryObject.position = { $regex: search, $options: "i" };
   }
 
-  let queryResult = jobsModel.find(queryObject)
+  let queryResult = jobsModel.find(queryObject);
 
   // sorting
-  if (sort === 'latest') {
-    queryResult = queryResult.sort('-createdAt')
+  if (sort === "latest") {
+    queryResult = queryResult.sort("-createdAt");
   }
 
-  if (sort === 'oldest') {
-    queryResult = queryResult.sort('createdAt')
+  if (sort === "oldest") {
+    queryResult = queryResult.sort("createdAt");
   }
-  if (sort === 'a-z') {
-    queryResult = queryResult.sort('position')
+  if (sort === "a-z") {
+    queryResult = queryResult.sort("position");
   }
-  if (sort === 'z-a') {
-    queryResult = queryResult.sort('-position')
+  if (sort === "z-a") {
+    queryResult = queryResult.sort("-position");
   }
-  
-// pagination
-  const page = Number(req.query.page) || 1
-  const limit = Number(req.query.limit) || 10
-  const skip = (page - 1) * limit
 
-  queryResult = queryResult.skip(skip).limit(limit)
-  // jobs count 
-  const totalJobs = await jobsModel.countDocuments(queryResult)
-  const numOfPage = Math.ceil(totalJobs / limit)
-  
+  // pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  queryResult = queryResult.skip(skip).limit(limit);
+  // jobs count
+  const totalJobs = await jobsModel.countDocuments(queryResult);
+  const numOfPage = Math.ceil(totalJobs / limit);
+
   const jobs = await queryResult;
-  
 
   // const jobs = await jobsModel.find({ createdBy: req.user.userId });
   res.status(200).json({
     totalJobs,
     jobs,
-    numOfPage
+    numOfPage,
   });
 };
 
@@ -170,11 +168,15 @@ export const jobStatsController = async (req, res) => {
     },
   ]);
 
-  monthlyApplication = monthlyApplication.map(item => {
-    const { _id: { year, month }, count } = item
-    const date = moment().month(-1).year(year).format('MMM Y')
-    return { date, count }
-  })
+  monthlyApplication = monthlyApplication
+    .map((item) => {
+      const {
+        _id: { year, month },
+        count,
+      } = item;
+      const date = moment().month(-1).year(year).format("MMM Y");
+      return { date, count };
+    })
     .reverse();
   res
     .status(200)
